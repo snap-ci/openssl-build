@@ -1,0 +1,215 @@
+diff -up openssl-1.0.1t/Configure.rpmbuild openssl-1.0.1t/Configure
+--- openssl-1.0.1t/Configure.rpmbuild	2016-06-02 20:50:51.000000000 +0000
++++ openssl-1.0.1t/Configure	2016-06-02 20:36:37.000000000 +0000
+@@ -64,7 +64,7 @@ my $usage="Usage: Configure [no-<cipher>
+ #		disabled.
+ # no-sse2	disables IA-32 SSE2 code, above option implies no-sse2
+ # no-<cipher>   build without specified algorithm (rsa, idea, rc5, ...)
+-# -<xxx> +<xxx> compiler options are passed through 
++# -<xxx> +<xxx> compiler options are passed through
+ #
+ # DEBUG_SAFESTACK use type-safe stacks to enforce type-safety on stack items
+ #		provided to stack calls. Generates unique stack functions for
+@@ -105,7 +105,7 @@ my $usage="Usage: Configure [no-<cipher>
+ # AES_ASM	ASE_[en|de]crypt is implemented in assembler
+ 
+ # Minimum warning options... any contributions to OpenSSL should at least get
+-# past these. 
++# past these.
+ 
+ my $gcc_devteam_warn = "-Wall -pedantic -DPEDANTIC -Wno-long-long -Wsign-compare -Wmissing-prototypes -Wshadow -Wformat -Werror -DCRYPTO_MDEBUG_ALL -DCRYPTO_MDEBUG_ABORT -DREF_CHECK -DOPENSSL_NO_DEPRECATED";
+ 
+@@ -153,7 +153,7 @@ my $ppc64_asm="ppccpuid.o ppccap.o:bn-pp
+ my $no_asm=":::::::::::::::void";
+ 
+ # As for $BSDthreads. Idea is to maintain "collective" set of flags,
+-# which would cover all BSD flavors. -pthread applies to them all, 
++# which would cover all BSD flavors. -pthread applies to them all,
+ # but is treated differently. OpenBSD expands is as -D_POSIX_THREAD
+ # -lc_r, which is sufficient. FreeBSD 4.x expands it as -lc_r,
+ # which has to be accompanied by explicit -D_THREAD_SAFE and
+@@ -233,7 +233,7 @@ my %table=(
+ # compiler:-)
+ #						<appro@fy.chalmers.se>
+ "solaris64-x86_64-gcc","gcc:-m64 -O3 -Wall -DL_ENDIAN::-D_REENTRANT::-lsocket -lnsl -ldl:SIXTY_FOUR_BIT_LONG RC4_CHUNK DES_INT DES_UNROLL:${x86_64_asm}:elf:dlfcn:solaris-shared:-fPIC:-m64 -shared -static-libgcc:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):::/64",
+- 
++
+ #### Solaris x86 with Sun C setups
+ "solaris-x86-cc","cc:-fast -O -Xa::-D_REENTRANT::-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_PTR DES_UNROLL BF_PTR:${no_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+ "solaris64-x86_64-cc","cc:-fast -xarch=amd64 -xstrconst -Xa -DL_ENDIAN::-D_REENTRANT::-lsocket -lnsl -ldl:SIXTY_FOUR_BIT_LONG RC4_CHUNK DES_INT DES_UNROLL:${x86_64_asm}:elf:dlfcn:solaris-shared:-KPIC:-xarch=amd64 -G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):::/64",
+@@ -258,7 +258,7 @@ my %table=(
+ "solaris64-sparcv9-cc","cc:-xtarget=ultra -xarch=v9 -xO5 -xstrconst -xdepend -Xa -DB_ENDIAN::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_INT DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-xarch=v9 -G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):::/64",
+ ####
+ "debug-solaris-sparcv8-cc","cc:-DBN_DEBUG -DREF_CHECK -DCONF_DEBUG -DBN_CTX_DEBUG -DCRYPTO_MDEBUG_ALL -xarch=v8 -g -O -xstrconst -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT::-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv8_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+-"debug-solaris-sparcv9-cc","cc:-DBN_DEBUG -DREF_CHECK -DCONF_DEBUG -DBN_CTX_DEBUG -DCRYPTO_MDEBUG_ALL -xtarget=ultra -xarch=v8plus -g -O -xstrconst -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK_LL DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)", 
++"debug-solaris-sparcv9-cc","cc:-DBN_DEBUG -DREF_CHECK -DCONF_DEBUG -DBN_CTX_DEBUG -DCRYPTO_MDEBUG_ALL -xtarget=ultra -xarch=v8plus -g -O -xstrconst -Xa -DB_ENDIAN -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-lsocket -lnsl -ldl:BN_LLONG RC4_CHAR RC4_CHUNK_LL DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:solaris-shared:-KPIC:-G -dy -z text:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+ 
+ #### SunOS configs, assuming sparc for the gcc one.
+ #"sunos-cc", "cc:-O4 -DNOPROTO -DNOCONST::(unknown):SUNOS::DES_UNROLL:${no_asm}::",
+@@ -328,7 +328,7 @@ my %table=(
+ "hpux64-ia64-cc","cc:-Ae +DD64 +O3 +Olit=all -z -DB_ENDIAN -D_REENTRANT::::-ldl:SIXTY_FOUR_BIT_LONG MD2_CHAR RC4_INDEX DES_UNROLL DES_RISC1 DES_INT:${ia64_asm}:dlfcn:hpux-shared:+Z:+DD64 -b:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):::/hpux64",
+ # GCC builds...
+ "hpux-ia64-gcc","gcc:-O3 -DB_ENDIAN -D_REENTRANT::::-ldl:SIXTY_FOUR_BIT MD2_CHAR RC4_INDEX DES_UNROLL DES_RISC1 DES_INT:${ia64_asm}:dlfcn:hpux-shared:-fpic:-shared:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):::/hpux32",
+-"hpux64-ia64-gcc","gcc:-mlp64 -O3 -DB_ENDIAN -D_REENTRANT::::-ldl:SIXTY_FOUR_BIT_LONG MD2_CHAR RC4_INDEX DES_UNROLL DES_RISC1 DES_INT:${ia64_asm}:dlfcn:hpux-shared:-fpic:-mlp64 -shared:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):::/hpux64", 
++"hpux64-ia64-gcc","gcc:-mlp64 -O3 -DB_ENDIAN -D_REENTRANT::::-ldl:SIXTY_FOUR_BIT_LONG MD2_CHAR RC4_INDEX DES_UNROLL DES_RISC1 DES_INT:${ia64_asm}:dlfcn:hpux-shared:-fpic:-mlp64 -shared:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):::/hpux64",
+ 
+ # Legacy HPUX 9.X configs...
+ "hpux-cc",	"cc:-DB_ENDIAN -DBN_DIV2W -DMD32_XARRAY -Ae +ESlit +O2 -z::(unknown)::-Wl,+s -ldld:DES_PTR DES_UNROLL DES_RISC1:${no_asm}:dl:hpux-shared:+Z:-b:.sl.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+@@ -355,24 +355,24 @@ my %table=(
+ ####
+ # *-generic* is endian-neutral target, but ./config is free to
+ # throw in -D[BL]_ENDIAN, whichever appropriate...
+-"linux-generic32","gcc:-O3 -fomit-frame-pointer -Wall::-D_REENTRANT::-ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_INT DES_UNROLL BF_PTR:${no_asm}:dlfcn:linux-shared:-fPIC::.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+-"linux-ppc",	"gcc:-DB_ENDIAN -O3 -Wall::-D_REENTRANT::-ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_RISC1 DES_UNROLL:${ppc32_asm}:linux32:dlfcn:linux-shared:-fPIC::.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
++"linux-generic32","gcc:-DTERMIO -Wall \$(RPM_OPT_FLAGS)::-D_REENTRANT::-Wl,-z,relro -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_INT DES_UNROLL BF_PTR:${no_asm}:dlfcn:linux-shared:-fPIC:\$(RPM_OPT_FLAGS):.so.\$(SHLIB_SONAMEVER)",
++"linux-ppc",  "gcc:-DB_ENDIAN -DTERMIO -Wall \$(RPM_OPT_FLAGS)::-D_REENTRANT::-Wl,-z,relro -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_RISC1 DES_UNROLL:${ppc32_asm}:linux32:dlfcn:linux-shared:-fPIC:\$(RPM_OPT_FLAGS):.so.\$(SHLIB_SONAMEVER)",
+ # It's believed that majority of ARM toolchains predefine appropriate -march.
+ # If you compiler does not, do complement config command line with one!
+-"linux-armv4",	"gcc:-O3 -Wall::-D_REENTRANT::-ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_INT DES_UNROLL BF_PTR:${armv4_asm}:dlfcn:linux-shared:-fPIC::.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
++"linux-armv4",  "gcc:-DTERMIO -Wall \$(RPM_OPT_FLAGS)::-D_REENTRANT::-Wl,-z,relro -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_INT DES_UNROLL BF_PTR:${armv4_asm}:dlfcn:linux-shared:-fPIC:\$(RPM_OPT_FLAGS):.so.\$(SHLIB_SONAMEVER)",
+ #### IA-32 targets...
+ "linux-ia32-icc",	"icc:-DL_ENDIAN -O2 -no_cpprt::-D_REENTRANT::-ldl:BN_LLONG ${x86_gcc_des} ${x86_gcc_opts}:${x86_elf_asm}:dlfcn:linux-shared:-KPIC::.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+-"linux-elf",	"gcc:-DL_ENDIAN -O3 -fomit-frame-pointer -Wall::-D_REENTRANT::-ldl:BN_LLONG ${x86_gcc_des} ${x86_gcc_opts}:${x86_elf_asm}:dlfcn:linux-shared:-fPIC::.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
++"linux-elf",  "gcc:-DL_ENDIAN -DTERMIO -Wall \$(RPM_OPT_FLAGS)::-D_REENTRANT::-Wl,-z,relro -ldl:BN_LLONG ${x86_gcc_des} ${x86_gcc_opts}:${x86_elf_asm}:dlfcn:linux-shared:-fPIC:\$(RPM_OPT_FLAGS):.so.\$(SHLIB_SONAMEVER)",
+ "linux-aout",	"gcc:-DL_ENDIAN -O3 -fomit-frame-pointer -march=i486 -Wall::(unknown):::BN_LLONG ${x86_gcc_des} ${x86_gcc_opts}:${x86_asm}:a.out",
+ ####
+-"linux-generic64","gcc:-O3 -Wall::-D_REENTRANT::-ldl:SIXTY_FOUR_BIT_LONG RC4_CHAR RC4_CHUNK DES_INT DES_UNROLL BF_PTR:${no_asm}:dlfcn:linux-shared:-fPIC::.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+-"linux-ppc64",	"gcc:-m64 -DB_ENDIAN -O3 -Wall::-D_REENTRANT::-ldl:SIXTY_FOUR_BIT_LONG RC4_CHAR RC4_CHUNK DES_RISC1 DES_UNROLL:${ppc64_asm}:linux64:dlfcn:linux-shared:-fPIC:-m64:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):::64",
+-"linux-ia64",	"gcc:-DL_ENDIAN -O3 -Wall::-D_REENTRANT::-ldl:SIXTY_FOUR_BIT_LONG RC4_CHUNK DES_UNROLL DES_INT:${ia64_asm}:dlfcn:linux-shared:-fPIC::.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
++"linux-generic64","gcc:-DTERMIO -Wall \$(RPM_OPT_FLAGS)::-D_REENTRANT::-Wl,-z,relro -ldl:SIXTY_FOUR_BIT_LONG RC4_CHAR RC4_CHUNK DES_INT DES_UNROLL BF_PTR:${no_asm}:dlfcn:linux-shared:-fPIC:\$(RPM_OPT_FLAGS):.so.\$(SHLIB_SONAMEVER)",
++"linux-ppc64",  "gcc:-m64 -DB_ENDIAN -DTERMIO -Wall \$(RPM_OPT_FLAGS)::-D_REENTRANT::-Wl,-z,relro -ldl:SIXTY_FOUR_BIT_LONG RC4_CHAR RC4_CHUNK DES_RISC1 DES_UNROLL:${ppc64_asm}:linux64:dlfcn:linux-shared:-fPIC:-m64 \$(RPM_OPT_FLAGS):.so.\$(SHLIB_SONAMEVER):::64",
++"linux-ia64", "gcc:-DL_ENDIAN -DTERMIO -Wall \$(RPM_OPT_FLAGS)::-D_REENTRANT::-Wl,-z,relro -ldl:SIXTY_FOUR_BIT_LONG RC4_CHUNK DES_UNROLL DES_INT:${ia64_asm}:dlfcn:linux-shared:-fPIC:\$(RPM_OPT_FLAGS):.so.\$(SHLIB_SONAMEVER)",
+ "linux-ia64-ecc","ecc:-DL_ENDIAN -O2 -Wall -no_cpprt::-D_REENTRANT::-ldl:SIXTY_FOUR_BIT_LONG RC4_CHUNK DES_INT:${ia64_asm}:dlfcn:linux-shared:-fPIC::.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+ "linux-ia64-icc","icc:-DL_ENDIAN -O2 -Wall -no_cpprt::-D_REENTRANT::-ldl:SIXTY_FOUR_BIT_LONG RC4_CHUNK DES_RISC1 DES_INT:${ia64_asm}:dlfcn:linux-shared:-fPIC::.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+-"linux-x86_64",	"gcc:-m64 -DL_ENDIAN -O3 -Wall::-D_REENTRANT::-ldl:SIXTY_FOUR_BIT_LONG RC4_CHUNK DES_INT DES_UNROLL:${x86_64_asm}:elf:dlfcn:linux-shared:-fPIC:-m64:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):::64",
++"linux-x86_64", "gcc:-m64 -DL_ENDIAN -DTERMIO -Wall \$(RPM_OPT_FLAGS)::-D_REENTRANT::-Wl,-z,relro -ldl:SIXTY_FOUR_BIT_LONG RC4_CHUNK DES_INT DES_UNROLL:${x86_64_asm}:elf:dlfcn:linux-shared:-fPIC:-m64 \$(RPM_OPT_FLAGS):.so.\$(SHLIB_SONAMEVER):::64",
+ "linux-x86_64-clang","clang: -m64 -DL_ENDIAN -O3 -Wall -Qunused-arguments::-D_REENTRANT::-ldl:SIXTY_FOUR_BIT_LONG RC4_CHUNK DES_INT DES_UNROLL:${x86_64_asm}:elf:dlfcn:linux-shared:-fPIC:-m64:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):::64",
+-"linux64-s390x",	"gcc:-m64 -DB_ENDIAN -O3 -Wall::-D_REENTRANT::-ldl:SIXTY_FOUR_BIT_LONG RC4_CHAR RC4_CHUNK DES_INT DES_UNROLL:${s390x_asm}:64:dlfcn:linux-shared:-fPIC:-m64:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):::64",
++"linux64-s390x",  "gcc:-m64 -DB_ENDIAN -DTERMIO -Wall \$(RPM_OPT_FLAGS)::-D_REENTRANT::-Wl,-z,relro -ldl:SIXTY_FOUR_BIT_LONG RC4_CHAR RC4_CHUNK DES_INT DES_UNROLL:${s390x_asm}:64:dlfcn:linux-shared:-fPIC:-m64 \$(RPM_OPT_FLAGS):.so.\$(SHLIB_SONAMEVER):::64",
+ #### So called "highgprs" target for z/Architecture CPUs
+ # "Highgprs" is kernel feature first implemented in Linux 2.6.32, see
+ # /proc/cpuinfo. The idea is to preserve most significant bits of
+@@ -386,16 +386,16 @@ my %table=(
+ # ldconfig and run-time linker to autodiscover. Unfortunately it
+ # doesn't work just yet, because of couple of bugs in glibc
+ # sysdeps/s390/dl-procinfo.c affecting ldconfig and ld.so.1...
+-"linux32-s390x",	"gcc:-m31 -Wa,-mzarch -DB_ENDIAN -O3 -Wall::-D_REENTRANT::-ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_INT DES_UNROLL:".eval{my $asm=$s390x_asm;$asm=~s/bn\-s390x\.o/bn_asm.o/;$asm}.":31:dlfcn:linux-shared:-fPIC:-m31:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):::/highgprs",
++"linux32-s390x",  "gcc:-m31 -Wa,-mzarch -DB_ENDIAN -DTERMIO -Wall \$(RPM_OPT_FLAGS)::-D_REENTRANT::-Wl,-z,relro -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_INT DES_UNROLL:".eval{my $asm=$s390x_asm;$asm=~s/bn\-s390x\.o/bn_asm.o/;$asm}.":31:dlfcn:linux-shared:-fPIC:-m31 \$(RPM_OPT_FLAGS):.so.\$(SHLIB_SONAMEVER):::/highgprs",
+ #### SPARC Linux setups
+ # Ray Miller <ray.miller@computing-services.oxford.ac.uk> has patiently
+ # assisted with debugging of following two configs.
+-"linux-sparcv8","gcc:-mcpu=v8 -DB_ENDIAN -O3 -fomit-frame-pointer -Wall -DBN_DIV2W::-D_REENTRANT::-ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_UNROLL BF_PTR:${sparcv8_asm}:dlfcn:linux-shared:-fPIC::.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
++"linux-sparcv8","gcc:-DB_ENDIAN -DTERMIO -Wall \$(RPM_OPT_FLAGS) -DBN_DIV2W::-D_REENTRANT::-Wl,-z,relro -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_UNROLL BF_PTR:${sparcv8_asm}:dlfcn:linux-shared:-fPIC:\$(RPM_OPT_FLAGS):.so.\$(SHLIB_SONAMEVER)",
+ # it's a real mess with -mcpu=ultrasparc option under Linux, but
+ # -Wa,-Av8plus should do the trick no matter what.
+-"linux-sparcv9","gcc:-m32 -mcpu=ultrasparc -DB_ENDIAN -O3 -fomit-frame-pointer -Wall -Wa,-Av8plus -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:linux-shared:-fPIC:-m32:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
++"linux-sparcv9","gcc:-DB_ENDIAN -DTERMIO -Wall \$(RPM_OPT_FLAGS) -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-Wl,-z,relro -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:linux-shared:-fPIC:\$(RPM_OPT_FLAGS):.so.\$(SHLIB_SONAMEVER)",
+ # GCC 3.1 is a requirement
+-"linux64-sparcv9","gcc:-m64 -mcpu=ultrasparc -DB_ENDIAN -O3 -fomit-frame-pointer -Wall::-D_REENTRANT:ULTRASPARC:-ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_INT DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:linux-shared:-fPIC:-m64:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR):::64",
++"linux64-sparcv9","gcc:-DB_ENDIAN -DTERMIO -Wall \$(RPM_OPT_FLAGS)::-D_REENTRANT:ULTRASPARC:-Wl,-z,relro -ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_INT DES_PTR DES_RISC1 DES_UNROLL BF_PTR:${sparcv9_asm}:dlfcn:linux-shared:-fPIC:\$(RPM_OPT_FLAGS):.so.\$(SHLIB_SONAMEVER):::64",
+ #### Alpha Linux with GNU C and Compaq C setups
+ # Special notes:
+ # - linux-alpha+bwx-gcc is ment to be used from ./config only. If you
+@@ -409,8 +409,8 @@ my %table=(
+ #
+ #					<appro@fy.chalmers.se>
+ #
+-"linux-alpha-gcc","gcc:-O3 -DL_ENDIAN::-D_REENTRANT::-ldl:SIXTY_FOUR_BIT_LONG RC4_CHUNK DES_RISC1 DES_UNROLL:${alpha_asm}:dlfcn:linux-shared:-fPIC::.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
+-"linux-alpha+bwx-gcc","gcc:-O3 -DL_ENDIAN::-D_REENTRANT::-ldl:SIXTY_FOUR_BIT_LONG RC4_CHAR RC4_CHUNK DES_RISC1 DES_UNROLL:${alpha_asm}:dlfcn:linux-shared:-fPIC::.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
++"linux-alpha-gcc","gcc:-DL_ENDIAN -DTERMIO -Wall \$(RPM_OPT_FLAGS)::-D_REENTRANT::-Wl,-z,relro -ldl:SIXTY_FOUR_BIT_LONG RC4_CHUNK DES_RISC1 DES_UNROLL:${alpha_asm}:dlfcn:linux-shared:-fPIC:\$(RPM_OPT_FLAGS):.so.\$(SHLIB_SONAMEVER)",
++"linux-alpha+bwx-gcc","gcc:-DL_ENDIAN -DTERMIO -Wall \$(RPM_OPT_FLAGS)::-D_REENTRANT::-Wl,-z,relro -ldl:SIXTY_FOUR_BIT_LONG RC4_CHAR RC4_CHUNK DES_RISC1 DES_UNROLL:${alpha_asm}:dlfcn:linux-shared:-fPIC:\$(RPM_OPT_FLAGS):.so.\$(SHLIB_SONAMEVER)",
+ "linux-alpha-ccc","ccc:-fast -readonly_strings -DL_ENDIAN::-D_REENTRANT:::SIXTY_FOUR_BIT_LONG RC4_CHUNK DES_INT DES_PTR DES_RISC1 DES_UNROLL:${alpha_asm}",
+ "linux-alpha+bwx-ccc","ccc:-fast -readonly_strings -DL_ENDIAN::-D_REENTRANT:::SIXTY_FOUR_BIT_LONG RC4_CHAR RC4_CHUNK DES_INT DES_PTR DES_RISC1 DES_UNROLL:${alpha_asm}",
+ 
+@@ -554,7 +554,7 @@ my %table=(
+ # with itself, Applink is never engaged and can as well be omitted.
+ "mingw64", "gcc:-mno-cygwin -DL_ENDIAN -O3 -Wall -DWIN32_LEAN_AND_MEAN -DUNICODE -D_UNICODE::-D_MT:MINGW64:-lws2_32 -lgdi32 -lcrypt32:SIXTY_FOUR_BIT RC4_CHUNK_LL DES_INT EXPORT_VAR_AS_FN:${x86_64_asm}:mingw64:win32:cygwin-shared:-D_WINDLL:-mno-cygwin:.dll.a",
+ 
+-# UWIN 
++# UWIN
+ "UWIN", "cc:-DTERMIOS -DL_ENDIAN -O -Wall:::UWIN::BN_LLONG ${x86_gcc_des} ${x86_gcc_opts}:${no_asm}:win32",
+ 
+ # Cygwin
+@@ -631,7 +631,7 @@ my %table=(
+ my @MK1MF_Builds=qw(VC-WIN64I VC-WIN64A
+ 		    debug-VC-WIN64I debug-VC-WIN64A
+ 		    VC-NT VC-CE VC-WIN32 debug-VC-WIN32
+-		    BC-32 
++		    BC-32
+ 		    netware-clib netware-clib-bsdsock
+ 		    netware-libc netware-libc-bsdsock);
+ 
+@@ -826,7 +826,7 @@ PROCESS_ARGS:
+ 					{
+ 					$disabled{$1} = "option";
+ 					}
+-				}			
++				}
+ 			}
+ 		elsif (/^enable-(.+)$/ || /^experimental-(.+)$/)
+ 			{
+@@ -1102,7 +1102,7 @@ foreach (sort (keys %disabled))
+ 			{
+ 			$openssl_other_defines .= "#define OPENSSL_NO_$ALGO\n";
+ 			print " OPENSSL_NO_$ALGO";
+-		
++
+ 			if (/^err$/)	{ $flags .= "-DOPENSSL_NO_ERR "; }
+ 			elsif (/^asm$/)	{ $no_asm = 1; }
+ 			}
+@@ -1342,7 +1342,7 @@ else
+ #			$thread_defines .= "#define $def\n";
+ #			}
+ #		}
+-	}	
++	}
+ 
+ $lflags="$libs$lflags" if ($libs ne "");
+ 
+@@ -1702,7 +1702,7 @@ while (<IN>)
+ 	elsif ($shared_extension ne "" && $shared_extension =~ /^\.s([ol])\.[^\.]*\.[^\.]*$/)
+ 		{
+ 		my $sotmp = $1;
+-		s/^SHARED_LIBS_LINK_EXTS=.*/SHARED_LIBS_LINK_EXTS=.s$sotmp.\$(SHLIB_MAJOR) .s$sotmp/;
++		s/^SHARED_LIBS_LINK_EXTS=.*/SHARED_LIBS_LINK_EXTS=.s$sotmp.\$(SHLIB_SONAMEVER) .s$sotmp/;
+ 		}
+ 	elsif ($shared_extension ne "" && $shared_extension =~ /^\.[^\.]*\.[^\.]*\.dylib$/)
+ 		{
+@@ -1930,8 +1930,8 @@ print "RC4_CHUNK is unsigned long long\n
+ print "MD2 uses u$type[$md2_int]\n" if $md2_int != $def_int;
+ print "IDEA uses u$type[$idea_int]\n" if $idea_int != $def_int;
+ print "RC2 uses u$type[$rc2_int]\n" if $rc2_int != $def_int;
+-print "BF_PTR used\n" if $bf_ptr == 1; 
+-print "BF_PTR2 used\n" if $bf_ptr == 2; 
++print "BF_PTR used\n" if $bf_ptr == 1;
++print "BF_PTR2 used\n" if $bf_ptr == 2;
+ 
+ if($IsMK1MF) {
+ 	open (OUT,">crypto/buildinf.h") || die "Can't open buildinf.h";
+@@ -1998,7 +1998,7 @@ BEGIN
+     BEGIN
+ 	BLOCK "040904b0"
+ 	BEGIN
+-	    // Required:	    
++	    // Required:
+ 	    VALUE "CompanyName", "The OpenSSL Project, http://www.openssl.org/\\0"
+ 	    VALUE "FileDescription", "OpenSSL Shared Library\\0"
+ 	    VALUE "FileVersion", "$version\\0"
+@@ -2027,7 +2027,7 @@ END
+ EOF
+ 	close(OUT);
+   }
+-  
++
+ print <<EOF;
+ 
+ Configured for $target.
+@@ -2135,7 +2135,7 @@ sub print_table_entry
+ 	my $perlasm_scheme,my $dso_scheme,my $shared_target,my $shared_cflag,
+ 	my $shared_ldflag,my $shared_extension,my $ranlib,my $arflags,my $multilib)=
+ 	split(/\s*:\s*/,$table{$target} . ":" x 30 , -1);
+-			
++
+ 	print <<EOF
+ 
+ *** $target
