@@ -352,6 +352,9 @@ rm -rf $RPM_BUILD_ROOT/%{_libdir}/fipscanister.*
 %postun -p /sbin/ldconfig
 
 %changelog
+* Fri Jun  3 2016 Marques Lee <marques.lee@thoughtworks.com> 1.0.1t-1.1
+- not building FIPS module, just a vanilla OpenSSL to keep up with AWS
+
 * Mon May  2 2016 Tomáš Mráz <tmraz@redhat.com> 1.0.1e-48.1
 - fix CVE-2016-2105 - possible overflow in base64 encoding
 - fix CVE-2016-2106 - possible overflow in EVP_EncryptUpdate()
